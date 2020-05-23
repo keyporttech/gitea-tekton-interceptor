@@ -14,20 +14,20 @@
 package main
 
 import (
-  "crypto/hmac"
-  "crypto/sha1"
+	"crypto/hmac"
+	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
-  "encoding/hex"
-  "errors"
-  "fmt"
-  "hash"
-  "io/ioutil"
+	"encoding/hex"
+	"errors"
+	"fmt"
+	"hash"
+	"io/ioutil"
 	"log"
 	"net/http"
-  "net/url"
+	"net/url"
 	"os"
-  "strings"
+	"strings"
 )
 
 const (
@@ -45,6 +45,7 @@ const (
 	// deliveryIDHeader is the Gitea header key used to pass the unique ID for the webhook event.
 	deliveryIDHeader = "X-Gitea-Delivery"
 )
+
 // DeliveryID returns the unique delivery ID of webhook request r.
 //
 func DeliveryID(r *http.Request) string {
