@@ -160,6 +160,7 @@ func ValidatePayload(r *http.Request, secretToken []byte) (payload []byte, err e
 	return payload, nil
 }
 
+// main function
 func main() {
 	secretToken := os.Getenv(envSecret)
 	if secretToken == "" {
