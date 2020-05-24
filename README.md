@@ -2,8 +2,6 @@
 
 This a custom gitea interceptor for [tekton triggers](https://github.com/tektoncd/triggers). It is used by [k8sCI](https://github.com/keyporttech/k8sci) to validate gitea webhook requests.
 
-
-
 # usage
 
 This is for use as a webhook interceptor so that a tekton event listener can process gitea webhooks. See [tekton triggers event listeners](https://github.com/tektoncd/triggers/blob/master/docs/eventlisteners.md) for more details.
