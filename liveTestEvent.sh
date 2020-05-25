@@ -4,6 +4,4 @@ HEADERS='-H "X-Gitea-Delivery: 76cfa806-1c16-448b-b50d-2fe0789cf397" -H "X-Gitea
 
 PAYLOAD=$(cat testEvent.json)
 
-echo "curl ${HEADERS} --data @testEvent.json -X POST http://cicd.keyporttech.com:30280/gitea/golang
-"
 bash -c "curl $HEADERS --data @testEvent.json localhost:8080;"
