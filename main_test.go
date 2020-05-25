@@ -26,6 +26,7 @@ const (
   test_payload = `{ "test123" = "test"}`
 )
 
+// tests validate payload
 func TestValidatePayload(t *testing.T) {
 	const defaultBody = `{"hey":true}` // All tests below use the default request body and signature.
 	const defaultSignature = "126f2c800419c60137ce748d7672e77b65cf16d6"
