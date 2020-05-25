@@ -17,7 +17,7 @@ build:
 
 .PHONY: build
 
-test:
+test: build
 	@echo "testing..."
 	go test
 
