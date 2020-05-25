@@ -14,7 +14,12 @@ build:
 		--ldflags="--s" \
 		.
 	@echo "OK"
+
 .PHONY: build
+
+test:
+	@echo "testing..."
+	go test
 
 docker:
 	docker build ./ -t ${DOCKER_REGISTRY}/${IMAGE}:${VERSION}
