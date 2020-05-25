@@ -5,7 +5,7 @@ IMAGE=gitea-webbhook-interceptor
 VERSION = $(shell git describe --abbrev=0)
 
 
-build:
+compile:
 	@echo "making..."
 
 	CGO_ENABLED=0 go build -a \
@@ -20,6 +20,12 @@ build:
 test: build
 	@echo "testing..."
 	go test
+	@echo "OK"
+
+.PHONY: test
+
+build: compile test
+.PHONY: build
 
 docker:
 	docker build ./ -t ${DOCKER_REGISTRY}/${IMAGE}:${VERSION}
