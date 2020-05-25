@@ -27,7 +27,7 @@ const (
 )
 
 func TestValidatePayload(t *testing.T) {
-	const defaultBody = `{"yo":true}` // All tests below use the default request body and signature.
+	const defaultBody = `{"hey":true}` // All tests below use the default request body and signature.
 	const defaultSignature = "sha1=126f2c800419c60137ce748d7672e77b65cf16d6"
 	secretKey := []byte("0123456789abcdef")
 	tests := []struct {
@@ -40,8 +40,7 @@ func TestValidatePayload(t *testing.T) {
 	}{
 		// The following tests generate expected errors:
 		{},                         // Missing signature
-		{signature: "yo"},          // Missing signature prefix
-		{signature: "sha1=yo"},     // Signature not hex string
+		{signature: "yo"},     // Signature not hex string
 		{signature: "sha1=012345"}, // Invalid signature
 		// The following tests expect err=nil:
 		{
