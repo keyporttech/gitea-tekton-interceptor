@@ -15,9 +15,7 @@ package main
 
 import (
 	"crypto/hmac"
-	"crypto/sha1"
 	"crypto/sha256"
-	"crypto/sha512"
 	"encoding/hex"
 	"errors"
 	"fmt"
@@ -27,7 +25,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strings"
 )
 
 const (
@@ -39,8 +36,8 @@ const (
 	sha256Prefix = "sha256"
 	sha512Prefix = "sha512"
 	// signatureHeader is the Gitea header key used to pass the HMAC hexdigest.
-	signatureHeader = "HTTP_X_GITEA_SIGNATURE"
-	// eventTypeHeader is the gitea header key used to pass the event type.
+	signatureHeader = "X-Gitea-Signature"
+	// eventTypeHeader is the Gitea header key used to pass the event type.
 	eventTypeHeader = "X-Gitea-Event"
 	// deliveryIDHeader is the Gitea header key used to pass the unique ID for the webhook event.
 	deliveryIDHeader = "X-Gitea-Delivery"
@@ -63,6 +60,7 @@ func genMAC(message, key []byte, hashFunc func() hash.Hash) []byte {
 // checkMAC reports whether messageMAC is a valid HMAC tag for message.
 func checkMAC(message, messageMAC, key []byte, hashFunc func() hash.Hash) bool {
 	expectedMAC := genMAC(message, key, hashFunc)
+	fmt.Printf("expecting %x: %x", messageMAC, expectedMAC)
 	return hmac.Equal(messageMAC, expectedMAC)
 }
 
@@ -72,24 +70,12 @@ func messageMAC(signature string) ([]byte, func() hash.Hash, error) {
 	if signature == "" {
 		return nil, nil, errors.New("missing signature")
 	}
-	sigParts := strings.SplitN(signature, "=", 2)
-	if len(sigParts) != 2 {
-		return nil, nil, fmt.Errorf("error parsing signature %q", signature)
-	}
 
 	var hashFunc func() hash.Hash
-	switch sigParts[0] {
-	case sha1Prefix:
-		hashFunc = sha1.New
-	case sha256Prefix:
-		hashFunc = sha256.New
-	case sha512Prefix:
-		hashFunc = sha512.New
-	default:
-		return nil, nil, fmt.Errorf("unknown hash type prefix: %q", sigParts[0])
-	}
 
-	buf, err := hex.DecodeString(sigParts[1])
+	hashFunc = sha256.New
+
+	buf, err := hex.DecodeString(signature)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error decoding signature %q: %v", signature, err)
 	}
@@ -97,7 +83,7 @@ func messageMAC(signature string) ([]byte, func() hash.Hash, error) {
 }
 
 // ValidateSignature validates the signature for the given payload.
-// signature is the gitea hash signature delivered in the X-Hub-Signature header.
+// signature is the gitea hash signature delivered in the X-Gitea-Signature header.
 // payload is the JSON payload sent by gitea Webhooks.
 // secretToken is the gitea Webhook secret token.
 //
@@ -171,11 +157,12 @@ func main() {
 		//TODO: We should probably send over the EL eventID as a X-Tekton-Event-Id header as well
 		payload, err := ValidatePayload(request, []byte(secretToken))
 		id := DeliveryID(request)
+		signature := request.Header.Get(signatureHeader)
 		if err != nil {
-			log.Printf("Error handling Gitea Event with delivery ID %s : %q", id, err)
+			log.Printf("Error handling Gitea Event with delivery ID %s with signature: %s : %q", id, err)
 			http.Error(writer, fmt.Sprint(err), http.StatusBadRequest)
 		}
-		log.Printf("Handling Gitea Event with delivery ID: %s; Payload: %s", id, payload)
+		log.Printf("Handling Gitea Event with delivery ID: %s; Payload: %s", id, signature, payload)
 		n, err := writer.Write(payload)
 		if err != nil {
 			log.Printf("Failed to write response for gitea event ID: %s. Bytes writted: %d. Error: %q", id, n, err)
