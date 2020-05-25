@@ -58,17 +58,11 @@ func TestValidatePayload(t *testing.T) {
 			wantPayload: defaultBody,
 		},
 		{
-			signature:   "sha256=b1f8020f5b4cd42042f807dd939015c4a418bc1ff7f604dd55b0a19b5d953d9b",
+			signature:   "b1f8020f5b4cd42042f807dd939015c4a418bc1ff7f604dd55b0a19b5d953d9b",
 			event:       "ping",
 			wantEvent:   "ping",
 			wantPayload: defaultBody,
-		},
-		{
-			signature:   "sha512=8456767023c1195682e182a23b3f5d19150ecea598fde8cb85918f7281b16079471b1329f92b912c4d8bd7455cb159777db8f29608b20c7c87323ba65ae62e1f",
-			event:       "ping",
-			wantEvent:   "ping",
-			wantPayload: defaultBody,
-		},
+		}
 	}
 
 	for _, test := range tests {
