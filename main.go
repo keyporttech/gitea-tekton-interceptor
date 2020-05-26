@@ -168,6 +168,5 @@ func main() {
 			log.Printf("Failed to write response for gitea event ID: %s. Bytes writted: %d. Error: %q", id, n, err)
 		}
 	})
-
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", 8080), nil))
 }
