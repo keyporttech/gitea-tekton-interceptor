@@ -21,11 +21,6 @@ import (
 	"testing"
 )
 
-const (
-  test_secret = "TEST"
-  test_payload = `{ "test123" = "test"}`
-)
-
 // tests validate payload
 func TestValidatePayload(t *testing.T) {
 	const defaultBody = `{"hey":true}` // All tests below use the default request body and signature.
