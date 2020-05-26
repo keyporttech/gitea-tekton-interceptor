@@ -21,7 +21,6 @@ test: build
 	@echo "testing..."
 	go test
 	@echo "OK"
-
 .PHONY: test
 
 build: compile test
