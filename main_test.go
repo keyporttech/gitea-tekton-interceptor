@@ -11,6 +11,8 @@
  limitations under the License.
 */
 
+package main
+
 import (
 	"bytes"
 	"encoding/json"
@@ -35,7 +37,7 @@ func TestValidatePayload(t *testing.T) {
 		wantPayload string
 	}{
 		// The following tests generate expected errors:
-		{},                         // Missing signature
+		{},                    // Missing signature
 		{signature: "yo"},     // Signature not hex string
 		{signature: "012345"}, // Invalid signature
 		// The following tests expect err=nil:
@@ -58,7 +60,7 @@ func TestValidatePayload(t *testing.T) {
 			event:       "ping",
 			wantEvent:   "ping",
 			wantPayload: defaultBody,
-		}
+		},
 	}
 
 	for _, test := range tests {
