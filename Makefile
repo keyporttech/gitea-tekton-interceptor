@@ -17,7 +17,7 @@ compile:
 
 .PHONY: build
 
-test: build
+test:
 	@echo "testing..."
 	go test
 	@echo "OK"
