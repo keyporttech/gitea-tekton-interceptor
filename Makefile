@@ -24,6 +24,7 @@ test: build
 .PHONY: test
 
 build: compile test
+	
 .PHONY: build
 
 docker:
