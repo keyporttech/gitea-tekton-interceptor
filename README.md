@@ -2,7 +2,7 @@
 
 This a custom gitea interceptor for [tekton triggers](https://github.com/tektoncd/triggers). It is used by [k8sCI](https://github.com/keyporttech/k8sci) to validate gitea webhook requests.
 
-The primary function is use the configured webhook secret key to validate payload encryption hecksum.
+The primary function is use the configured webhook secret key to validate payload encryption checksum.
 
 This code borrows heavily from [go-github](https://github.com/google/go-github/messages.go), which is modified for use in gitea. Much gratitude the developers of that project.
 
