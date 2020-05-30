@@ -12,7 +12,7 @@ This is for use as a webhook interceptor so that a tekton event listener can pro
 
 The docker image is published at [keyporttech/gitea-tektconcd-event-interceptor] (https://hub.docker.com/repository/docker/keyporttech/gitea-tektconcd-event-interceptor), and this image is used as service deployment in the [k8sCI](https://github.com/keyporttech/k8sci).
 
-# building
+# building locally
 
 ### Prerequisites: golang, docker, makefile installed
 
