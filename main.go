@@ -92,6 +92,7 @@ func ValidateSignature(signature string, payload, secretToken []byte) error {
 	if err != nil {
 		return err
 	}
+	fmt.Printf("signature=%o", messageMAC )
 	if !checkMAC(payload, messageMAC, secretToken, hashFunc) {
 		return errors.New("payload signature check failed")
 	}
@@ -157,12 +158,9 @@ func main() {
 		//TODO: We should probably send over the EL eventID as a X-Tekton-Event-Id header as well
 		payload, err := ValidatePayload(request, []byte(secretToken))
 		id := DeliveryID(request)
-		signature := request.Header.Get(signatureHeader)
 		if err != nil {
-			log.Printf("Error handling Gitea Event with delivery ID %s with signature: %s : %q", id, err)
 			http.Error(writer, fmt.Sprint(err), http.StatusBadRequest)
 		}
-		log.Printf("Handling Gitea Event with delivery ID: %s; Payload: %s", id, signature, payload)
 		n, err := writer.Write(payload)
 		if err != nil {
 			log.Printf("Failed to write response for gitea event ID: %s. Bytes writted: %d. Error: %q", id, n, err)

@@ -1,5 +1,5 @@
 {
-  "secret": "TmobileSucks!",
+  "secret": "YOUR_secret",
   "ref": "refs/heads/master",
   "before": "4940e4623ee51d1ad388b88acb3ce109d64f0738",
   "after": "16b1a0961aa1bd89feb36dd4b86c3a7215c21c91",
@@ -11,12 +11,12 @@
       "url": "http://localhost:3000/keyporttech/gitea-tektoncd-event-interceptor/commit/16b1a0961aa1bd89feb36dd4b86c3a7215c21c91",
       "author": {
         "name": "John",
-        "email": "jfelten@pop-os.localdomain",
+        "email": "gitea_user@pop-os.localdomain",
         "username": ""
       },
       "committer": {
         "name": "John",
-        "email": "jfelten@pop-os.localdomain",
+        "email": "gitea_user@pop-os.localdomain",
         "username": ""
       },
       "verification": null,
@@ -90,26 +90,26 @@
   },
   "pusher": {
     "id": 2,
-    "login": "jfelten",
+    "login": "gitea_user",
     "full_name": "",
-    "email": "john.felten@gmail.com",
-    "avatar_url": "http://localhost:3000/user/avatar/jfelten/-1",
+    "email": "gitea.user@doman.com",
+    "avatar_url": "http://localhost:3000/user/avatar/gitea_user/-1",
     "language": "en-US",
     "is_admin": true,
     "last_login": "2020-05-24T18:53:48Z",
     "created": "2018-12-13T06:03:45Z",
-    "username": "jfelten"
+    "username": "gitea_user"
   },
   "sender": {
     "id": 2,
-    "login": "jfelten",
+    "login": "gitea_user",
     "full_name": "",
-    "email": "john.felten@gmail.com",
-    "avatar_url": "http://localhost:3000/user/avatar/jfelten/-1",
+    "email": "gitea.user@doman.com",
+    "avatar_url": "http://localhost:3000/user/avatar/gitea_user/-1",
     "language": "en-US",
     "is_admin": true,
     "last_login": "2020-05-24T18:53:48Z",
     "created": "2018-12-13T06:03:45Z",
-    "username": "jfelten"
+    "username": "gitea_user"
   }
 }

@@ -15,18 +15,14 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"net/http"
-	"net/url"
-	"reflect"
-	"strings"
 	"testing"
 )
 
 // tests validate payload
 func TestValidatePayload(t *testing.T) {
 	const defaultBody = `{"hey":true}` // All tests below use the default request body and signature.
-	const defaultSignature = "126f2c800419c60137ce748d7672e77b65cf16d6"
+	const defaultSignature = "e6e0ee1c0ecca42eee878fd481bcf6de350cc8378df67dcef405e6c12b58d904"
 	secretKey := []byte("0123456789abcdef")
 	tests := []struct {
 		signature   string
