@@ -12,7 +12,7 @@
 DOCKER_REGISTRY="registry.keyporttech.com:30243"
 DOCKERHUB_REGISTRY="keyporttech"
 IMAGE=gitea-webbhook-interceptor
-VERSION = $(shell git describe --abbrev=0)
+VERSION = $(shell cat main.go | grep "Version = " | sed 's/var Version = //g' | tr -d '"')
 
 
 compile:

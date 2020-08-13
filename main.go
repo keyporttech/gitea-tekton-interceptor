@@ -27,6 +27,8 @@ import (
 	"os"
 )
 
+var Version = "0.1.0"
+
 const (
 	// Environment variable containing gitea secret token
 	envSecret = "GITEA_SECRET_TOKEN"
@@ -120,7 +122,7 @@ func ValidatePayload(r *http.Request, secretToken []byte) (payload []byte, err e
 
 		var err error
 		if body, err = ioutil.ReadAll(r.Body); err != nil {
-			return nil, err
+			return body, err
 		}
 
 		// If the content type is application/x-www-form-urlencoded,
@@ -140,6 +142,8 @@ func ValidatePayload(r *http.Request, secretToken []byte) (payload []byte, err e
 	if len(secretToken) > 0 {
 		sig := r.Header.Get(signatureHeader)
 		if err := ValidateSignature(sig, body, secretToken); err != nil {
+			fmt.Errorf("signature does not validate: %v",err)
+
 			return nil, err
 		}
 	}

@@ -11,12 +11,12 @@
       "url": "http://localhost:3000/keyporttech/gitea-tektoncd-event-interceptor/commit/16b1a0961aa1bd89feb36dd4b86c3a7215c21c91",
       "author": {
         "name": "John",
-        "email": "gitea_user@pop-os.localdomain",
+        "email": "gitea_userlocaldomain",
         "username": ""
       },
       "committer": {
         "name": "John",
-        "email": "gitea_user@pop-os.localdomain",
+        "email": "gitea_user@localdomain",
         "username": ""
       },
       "verification": null,

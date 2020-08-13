@@ -20,3 +20,8 @@ The docker image is published at [keyporttech/gitea-tektconcd-event-interceptor]
 make build #build
 make docker # build docker image
 ```
+or
+```bash
+go build
+go test
+```

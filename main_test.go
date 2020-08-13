@@ -17,14 +17,26 @@ import (
 	"bytes"
 	"net/http"
 	"testing"
+	"encoding/json"
+	"io/ioutil"
 )
+
+type GiteaEvent struct {
+	secret string `json:"secret"`
+}
 
 // tests validate payload
 func TestValidatePayload(t *testing.T) {
-	const defaultBody = `{"hey":true}` // All tests below use the default request body and signature.
-	const defaultSignature = "e6e0ee1c0ecca42eee878fd481bcf6de350cc8378df67dcef405e6c12b58d904"
-	secretKey := []byte("0123456789abcdef")
-	tests := []struct {
+
+  //load the sample request from files
+	file, _ := ioutil.ReadFile("testEvent.json")
+	giteaEvent := GiteaEvent{}
+	_ = json.Unmarshal([]byte(file), &giteaEvent)
+	defaultBody := string(file)
+
+	const defaultSignature = "8521072cee5f6e40d814b3efea4a158cb55b4eba6d08731f4db0aa993abbecf5"
+	secretKey := []byte("YOUR_secret")
+	validTests := []struct {
 		signature   string
 		eventID     string
 		event       string
@@ -33,33 +45,69 @@ func TestValidatePayload(t *testing.T) {
 		wantPayload string
 	}{
 		// The following tests generate expected errors:
-		{},                    // Missing signature
 		{signature: "yo"},     // Signature not hex string
 		{signature: "012345"}, // Invalid signature
-		// The following tests expect err=nil:
+
 		{
 			signature:   defaultSignature,
-			eventID:     "caesar-salad",
+			eventID:     "ping test",
 			event:       "ping",
-			wantEventID: "caesar-salad",
+			wantEventID: "ping test",
 			wantEvent:   "ping",
 			wantPayload: defaultBody,
 		},
 		{
 			signature:   defaultSignature,
-			event:       "ping",
-			wantEvent:   "ping",
+			eventID:     "push test",
+			event:       "push",
+			wantEvent:   "push",
 			wantPayload: defaultBody,
 		},
 		{
-			signature:   "b1f8020f5b4cd42042f807dd939015c4a418bc1ff7f604dd55b0a19b5d953d9b",
-			event:       "ping",
-			wantEvent:   "ping",
+			signature:   defaultSignature,
+			eventID:     "pull_request",
+			event:       "pull_request",
+			wantEvent:   "pull_request",
 			wantPayload: defaultBody,
 		},
 	}
 
-	for _, test := range tests {
+	// invalidTests := []struct {
+	// 	signature   string
+	// 	eventID     string
+	// 	event       string
+	// 	wantEventID string
+	// 	wantEvent   string
+	// 	wantPayload string
+	// }{
+	// 	// The following tests generate expected errors:
+	// 	{},                    // Missing signature
+	// 	{signature: "yo"},     // Signature not hex string
+	// 	{signature: "012345"}, // Invalid signature
+	// 	// The following tests expect err=nil:
+	// 	{
+	// 		signature:   defaultSignature,
+	// 		eventID:     "caesar-salad",
+	// 		event:       "ping",
+	// 		wantEventID: "caesar-salad",
+	// 		wantEvent:   "ping",
+	// 		wantPayload: defaultBody,
+	// 	},
+	// 	{
+	// 		signature:   defaultSignature,
+	// 		event:       "ping",
+	// 		wantEvent:   "ping",
+	// 		wantPayload: defaultBody,
+	// 	},
+	// 	{
+	// 		signature:   "b1f8020f5b4cd42042f807dd939015c4a418bc1ff7f604dd55b0a19b5d953d9b",
+	// 		event:       "ping",
+	// 		wantEvent:   "ping",
+	// 		wantPayload: defaultBody,
+	// 	},
+	// }
+
+	for _, test := range validTests {
 		buf := bytes.NewBufferString(defaultBody)
 		req, err := http.NewRequest("GET", "http://localhost/event", buf)
 		if err != nil {
@@ -78,7 +126,7 @@ func TestValidatePayload(t *testing.T) {
 			continue
 		}
 		if string(got) != test.wantPayload {
-			t.Errorf("ValidatePayload = %q, want %q", got, test.wantPayload)
+			t.Errorf("Event Id: %s - ValidatePayload = %q, want %q", test.eventID, got, test.wantPayload)
 		}
 	}
 }
