@@ -9,9 +9,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DOCKER_REGISTRY="registry.keyporttech.com:30243"
+DOCKER_REGISTRY="registry.keyporttech.com"
 DOCKERHUB_REGISTRY="keyporttech"
-IMAGE=gitea-webbhook-interceptor
+IMAGE=gitea-webhook-interceptor
 VERSION = $(shell cat main.go | grep "Version = " | sed 's/var Version = //g' | tr -d '"')
 
 
