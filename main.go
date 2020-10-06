@@ -27,7 +27,7 @@ import (
 	"os"
 )
 
-var Version = "0.1.0"
+var Version = "0.1.1"
 
 const (
 	// Environment variable containing gitea secret token
